@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Secreto da Análise Bancária | KRONOS.AG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde-kronos: #4A6741;
+            --verde-escuro: #2C3E28;
+            --verde-claro: #6B8F5E;
+            --creme: #F5F3EE;
+            --creme-escuro: #E8E4DB;
+            --dourado: #B8976C;
+            --dourado-claro: #D4B896;
+            --texto: #1A1A1A;
+            --texto-claro: #555555;
+            --branco: #FFFFFF;
+            --vermelho: #8B3A3A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--creme);
+            color: var(--texto);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background:
+                radial-gradient(circle at top left, rgba(74, 103, 65, 0.18), transparent 60%),
+                linear-gradient(135deg, #F5F3EE 0%, #E8E4DB 55%, #F5F3EE 100%);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 45%;
+            height: 100%;
+            background: var(--verde-kronos);
+            clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+            z-index: 1;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+            background: rgba(255,255,255,0.9);
+            border-radius: 32px;
+            box-shadow: 0 28px 80px rgba(0,0,0,0.12);
+            border: 1px solid rgba(232,228,219,0.9);
+        }
+
+        .hero-content {
+            padding-right: 20px;
+        }
+
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--verde-escuro), var(--verde-kronos));
+            color: var(--creme);
+            padding: 8px 18px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            border-radius: 999px;
+            box-shadow: 0 12px 30px rgba(44,62,40,0.55);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 4.5vw, 4rem);
+            color: var(--texto);
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            color: var(--verde-kronos);
+            display: block;
+            font-style: italic;
+        }
+
+        .urgency {
+            font-size: 14px;
+            color: var(--texto-claro);
+            margin-top: 18px;
+        }
+
+        .loss-warning {
+            font-size: 13px;
+            color: var(--texto-secundario);
+            margin-top: 10px;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            color: var(--texto-claro);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-text strong {
+            color: var(--texto);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 40px;
+            padding: 18px 26px;
+            border-radius: 999px;
+            background: rgba(245,243,238,0.9);
+            border: 1px solid rgba(74,103,65,0.16);
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--verde-kronos);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--texto-claro);
+            margin-top: 4px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--verde-escuro), var(--verde-kronos));
+            color: var(--branco);
+            padding: 18px 40px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            border-radius: 999px;
+            border: 1px solid var(--dourado-claro);
+            box-shadow: 0 18px 40px rgba(26, 26, 26, 0.38);
+            transition: all 0.25s ease;
+        }
+
+        .cta-button:hover {
+            background: linear-gradient(135deg, var(--verde-kronos), var(--verde-escuro));
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 22px 55px rgba(0,0,0,0.4);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .book-container {
+            position: relative;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .book-mockup {
+            width: 320px;
+            height: 448px;
+            background: #2C3E28;
+            border-radius: 4px 12px 12px 4px;
+            box-shadow: 
+                -20px 20px 60px rgba(0,0,0,0.4),
+                inset -2px 0 10px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-mockup::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 16px;
+            background: linear-gradient(90deg, rgba(0,0,0,0.35) 0%, transparent 100%);
+            border-radius: 4px 0 0 4px;
+            z-index: 20;
+        }
+
+        .book-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at top right, rgba(74,103,65,0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom left, rgba(184,151,108,0.1) 0%, transparent 50%);
+        }
+
+        .book-big-letter {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 14rem;
+            color: rgba(184,151,108,0.06);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 700;
+            line-height: 1;
+            z-index: 1;
+        }
+
+        .book-gold-accent {
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #B8976C, transparent);
+            z-index: 10;
+        }
+
+        .book-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            width: 85%;
+        }
+
+        .book-pre-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 9px;
+            color: #B8976C;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 16px;
+        }
+
+        .book-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            color: #F5F3EE;
+            font-weight: 500;
+            line-height: 1.1;
+            margin-bottom: 12px;
+        }
+
+        .book-subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            color: rgba(245,243,238,0.4);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .book-author {
+            position: absolute;
+            bottom: 50px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .book-author-line {
+            width: 24px;
+            height: 1px;
+            background: rgba(184,151,108,0.4);
+            margin: 0 auto 12px;
+        }
+
+        .book-author-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 13px;
+            color: rgba(245,243,238,0.7);
+            letter-spacing: 1px;
+        }
+
+        .book-corner {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(184,151,108,0.3);
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .book-corner.tl { top: 28px; left: 28px; }
+        .book-corner.tr { top: 28px; right: 28px; }
+        .book-corner.bl { bottom: 28px; left: 28px; }
+        .book-corner.br { bottom: 28px; right: 28px; }
+
+        .book-side-line {
+            position: absolute;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(184,151,108,0.15), transparent);
+            top: 100px;
+            bottom: 100px;
+            z-index: 10;
+        }
+
+        .book-side-line.left { left: 28px; }
+        .book-side-line.right { right: 28px; }
+
+        /* Pain Section */
+        .pain-section {
+            background: linear-gradient(180deg, var(--creme-escuro) 0%, var(--branco) 60%);
+            padding: 100px 40px;
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: var(--creme-escuro);
+            color: var(--verde-escuro);
+            padding: 6px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            color: var(--texto);
+            margin-bottom: 50px;
+            max-width: 700px;
+        }
+
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .pain-card {
+            background: var(--creme);
+            padding: 32px;
+            border-left: 3px solid var(--vermelho);
+        }
+
+        .pain-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--texto);
+            margin-bottom: 10px;
+        }
+
+        .pain-card p {
+            font-size: 15px;
+            color: var(--texto-claro);
+            line-height: 1.6;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: var(--verde-escuro);
+            padding: 100px 40px;
+        }
+
+        .solution-section .section-tag {
+            background: rgba(255,255,255,0.1);
+            color: var(--creme);
+        }
+
+        .solution-section .section-title {
+            color: var(--creme);
+        }
+
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .solution-text p {
+            font-size: 1.15rem;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 24px;
+            line-height: 1.8;
+        }
+
+        .solution-text p strong {
+            color: var(--dourado-claro);
+        }
+
+        .solution-list {
+            list-style: none;
+        }
+
+        .solution-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            color: var(--creme);
+            font-size: 1rem;
+        }
+
+        .solution-list li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--verde-claro);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--branco);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Author Section */
+        .author-section {
+            background: var(--creme);
+            padding: 100px 40px;
+        }
+
+        .author-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .author-text h2 {
+            font-size: 2.2rem;
+            color: var(--texto);
+            margin-bottom: 24px;
+        }
+
+        .author-text p {
+            font-size: 1.05rem;
+            color: var(--texto-claro);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .author-credentials {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .credential {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--branco);
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--verde-escuro);
+        }
+
+        .author-image {
+            display: flex;
+            justify-content: center;
+        }
+
+        .author-photo {
+            width: 380px;
+            height: 460px;
+            background: var(--verde-kronos);
+            position: relative;
+        }
+
+        .author-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-name-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 40px 24px 24px;
+            color: var(--branco);
+        }
+
+        .author-name-overlay h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .author-name-overlay span {
+            font-size: 13px;
+            color: var(--dourado-claro);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: var(--branco);
+            padding: 100px 40px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .content-item {
+            display: flex;
+            gap: 20px;
+            padding: 28px;
+            background: var(--creme);
+            transition: all 0.3s ease;
+        }
+
+        .content-item:hover {
+            background: var(--creme-escuro);
+        }
+
+        .content-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--verde-kronos);
+            line-height: 1;
+        }
+
+        .content-text h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--texto);
+            margin-bottom: 6px;
+        }
+
+        .content-text p {
+            font-size: 14px;
+            color: var(--texto-claro);
+        }
+
+        /* For Who Section */
+        .forwho-section {
+            background: var(--creme);
+            padding: 100px 40px;
+        }
+
+        .forwho-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .forwho-card {
+            padding: 40px;
+        }
+
+        .forwho-card.yes {
+            background: var(--verde-escuro);
+            color: var(--creme);
+        }
+
+        .forwho-card.no {
+            background: var(--branco);
+            border: 1px solid var(--creme-escuro);
+        }
+
+        .forwho-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 24px;
+        }
+
+        .forwho-card.yes h3 {
+            color: var(--creme);
+        }
+
+        .forwho-card.no h3 {
+            color: var(--texto);
+        }
+
+        .forwho-list {
+            list-style: none;
+        }
+
+        .forwho-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .forwho-card.yes .forwho-list li {
+            color: rgba(255,255,255,0.9);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .forwho-card.no .forwho-list li {
+            color: var(--texto-claro);
+            border-bottom: 1px solid var(--creme-escuro);
+        }
+
+        .forwho-list li:last-child {
+            border-bottom: none;
+        }
+
+        .list-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            background: var(--verde-kronos);
+            padding: 100px 40px;
+            text-align: center;
+        }
+
+        .pricing-section .section-tag {
+            background: rgba(255,255,255,0.15);
+            color: var(--creme);
+        }
+
+        .pricing-section .section-title {
+            color: var(--creme);
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 16px;
+        }
+
+        .pricing-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 50px;
+        }
+
+        .pricing-card {
+            background: var(--branco);
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 50px 40px;
+        }
+
+        .price-old {
+            font-size: 1rem;
+            color: var(--texto-claro);
+            text-decoration: line-through;
+            margin-bottom: 8px;
+        }
+
+        .price-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: var(--verde-kronos);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .price-main span {
+            font-size: 2rem;
+            vertical-align: top;
+        }
+
+        .price-note {
+            font-size: 14px;
+            color: var(--texto-claro);
+            margin-bottom: 32px;
+        }
+
+        .pricing-card .cta-button {
+            width: 100%;
+            text-align: center;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--branco);
+            padding: 100px 40px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--creme-escuro);
+        }
+
+        .faq-question {
+            padding: 24px 0;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--texto);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--verde-kronos);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            padding-bottom: 24px;
+            font-size: 15px;
+            color: var(--texto-claro);
+            line-height: 1.7;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            background: var(--verde-escuro);
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .footer-cta h2 {
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            color: var(--creme);
+            margin-bottom: 16px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .footer-cta p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 32px;
+        }
+
+        .footer-cta .cta-button {
+            background: var(--dourado);
+            color: var(--verde-escuro);
+        }
+
+        .footer-cta .cta-button:hover {
+            background: var(--dourado-claro);
+        }
+
+        /* Footer */
+        footer { 
+            padding: 4rem 6% 2rem; 
+            background: var(--texto); 
+        }
+        
+        .footer-content { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: grid; 
+            grid-template-columns: 1.5fr 1fr 1fr; 
+            gap: 4rem; 
+            padding-bottom: 3rem; 
+            border-bottom: 1px solid rgba(250, 249, 246, 0.1); 
+        }
+        
+        .footer-brand .logo { 
+            color: var(--creme); 
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem; 
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .footer-tagline { 
+            font-family: 'Cormorant Garamond', serif; 
+            font-size: 1.1rem; 
+            font-style: italic; 
+            color: var(--dourado); 
+            margin-bottom: 1rem; 
+        }
+        
+        .footer-brand p { 
+            font-size: 0.9rem; 
+            color: rgba(250, 249, 246, 0.6); 
+            line-height: 1.7; 
+            margin-bottom: 1.5rem; 
+        }
+        
+        .footer-social { 
+            display: flex; 
+            gap: 1rem; 
+        }
+        
+        .footer-social a { 
+            width: 40px; 
+            height: 40px; 
+            background: rgba(250, 249, 246, 0.08); 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--creme); 
+            transition: all 0.3s ease; 
+        }
+        
+        .footer-social a:hover { 
+            background: var(--verde-kronos); 
+            transform: translateY(-3px); 
+        }
+        
+        .footer-social a svg { 
+            width: 18px; 
+            height: 18px; 
+        }
+        
+        .footer-col h4 { 
+            font-size: 0.9rem; 
+            font-weight: 600; 
+            color: var(--creme); 
+            margin-bottom: 1.5rem; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        }
+        
+        .footer-col a { 
+            display: block; 
+            font-size: 0.9rem; 
+            color: rgba(250, 249, 246, 0.6); 
+            text-decoration: none; 
+            margin-bottom: 0.75rem; 
+            transition: all 0.3s ease; 
+        }
+        
+        .footer-col a:hover { 
+            color: var(--verde-kronos); 
+            padding-left: 5px; 
+        }
+        
+        .footer-bottom { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding-top: 2rem; 
+            text-align: center; 
+            font-size: 0.85rem; 
+            color: rgba(250, 249, 246, 0.4); 
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-container,
+            .solution-content,
+            .author-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero::before {
+                display: none;
+            }
+
+            .hero-content {
+                padding-right: 0;
+                text-align: center;
+            }
+
+            .hero-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .pain-grid,
+            .content-grid,
+            .forwho-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .author-grid {
+                direction: rtl;
+            }
+
+            .author-grid > * {
+                direction: ltr;
+            }
+
+            .author-photo {
+                width: 100%;
+                max-width: 350px;
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero-container,
+            .section-container,
+            .faq-container {
+                padding: 60px 24px;
+            }
+
+            .pain-section,
+            .solution-section,
+            .author-section,
+            .content-section,
+            .forwho-section,
+            .pricing-section,
+            .faq-section {
+                padding: 80px 24px;
+            }
+
+            .book-mockup {
+                width: 260px;
+                height: 364px;
+            }
+
+            .book-big-letter {
+                font-size: 10rem;
+            }
+
+            .book-title {
+                font-size: 1.8rem;
+            }
+            
+            .footer-content { 
+                grid-template-columns: 1fr; 
+                gap: 2rem; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-tag">🔒 Conhecimento Insider</div>
+                <h1>
+                    Manual Secreto
+                    <span class="highlight">da Análise Bancária</span>
+                </h1>
+                <p class="hero-text">
+                    Por que 90% das operações travam sem você saber o motivo?<br>
+                    <strong>15 anos do outro lado da mesa revelados em 48 páginas práticas.</strong>
+                </p>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">anos no mercado</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">R$1bi</div>
+                        <div class="stat-label">estruturado</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">anos gerente agro</div>
+                    </div>
+                </div>
+                <p class="urgency">
+                    Este conteúdo não foi feito para ficar disponível por muito tempo.
+                    Enquanto estiver no ar, está acessível.
+                </p>
+                <a href="https://pay.hotmart.com/B103290981B" class="cta-button" target="_blank">Quero destravar minhas operações agora</a>
+                <p class="loss-warning">
+                    O prejuízo invisível de uma operação travada é sempre maior que R$ 47.
+                </p>
+            </div>
+            <div class="hero-image">
+                <div class="book-container">
+                    <div class="book-mockup">
+                        <div class="book-gradient"></div>
+                        <div class="book-gold-accent"></div>
+                        <div class="book-corner tl"></div>
+                        <div class="book-corner tr"></div>
+                        <div class="book-corner bl"></div>
+                        <div class="book-corner br"></div>
+                        <div class="book-side-line left"></div>
+                        <div class="book-side-line right"></div>
+                        <div class="book-big-letter">M</div>
+                        <div class="book-content">
+                            <div class="book-pre-title">🔒 Insider Banking</div>
+                            <div class="book-title">Manual Secreto<br>Análise Bancária</div>
+                            <div class="book-subtitle">Por Dentro da Cabeça do Gerente</div>
+                        </div>
+                        <div class="book-author">
+                            <div class="book-author-line"></div>
+                            <div class="book-author-name">Eliana Santos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pain Section -->
+    <section class="pain-section">
+        <div class="section-container">
+            <div class="section-tag">O Problema</div>
+            <h2 class="section-title">Você trabalha meses numa operação. Ela volta sem explicação.</h2>
+            <div class="pain-grid">
+                <div class="pain-card">
+                    <h4>Crédito travado</h4>
+                    <p>Proposta parada há semanas. Gerente sumiu. Ninguém dá resposta. Safra passando.</p>
+                </div>
+                <div class="pain-card">
+                    <h4>Operação que volta</h4>
+                    <p>Terceira vez que pedem ajuste. Você corrige. Volta de novo. E ninguém diz o que realmente está errado.</p>
+                </div>
+                <div class="pain-card">
+                    <h4>Reputação queimada</h4>
+                    <p>O banco criou ranço do seu nome. Você nem sabe. Suas próximas operações já nascem com desconfiança.</p>
+                </div>
+                <div class="pain-card">
+                    <h4>Prejuízo invisível</h4>
+                    <p>Cada dia de atraso custa. Insumo atrasado. Janela perdida. Milhares escorrendo enquanto você espera.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section">
+        <div class="section-container">
+            <div class="solution-content">
+                <div class="solution-text">
+                    <div class="section-tag">A Solução</div>
+                    <h2 class="section-title">Entenda como o gerente pensa. Monte proposta que sai na primeira.</h2>
+                    <p>
+                        Eu sentei na cadeira que aprova. <strong>5 anos decidindo milhões.</strong>
+                    </p>
+                    <p>
+                        Esse manual mostra exatamente o que faz o gerente parar e pensar "problema" — e o que faz ele aprovar rápido.
+                    </p>
+                </div>
+                <div class="solution-list-container">
+                    <ul class="solution-list">
+                        <li>
+                            <span class="check-icon">✓</span>
+                            O que o banco realmente analisa (não é o que você pensa)
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            Os 7 sinais que travam sua operação antes de começar
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            Como funciona a validação interna — passo a passo
+                        </li>
+                        <li>
+                            <span class="check-icon">✓</span>
+                            O que fazer pra sua proposta ser prioridade
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Author Section -->
+    <section class="author-section">
+        <div class="section-container">
+            <div class="author-grid">
+                <div class="author-text">
+                    <div class="section-tag">Quem Escreveu</div>
+                    <h2>Eliana Santos</h2>
+                    <p>
+                        15 anos no mercado financeiro. 5 como gerente de agronegócio em banco público. Quase R$1 bilhão em operações estruturadas.
+                    </p>
+                    <p>
+                        Sei o que trava operação porque já travei. Sei o que aprova porque já aprovei. Agora mostro pra quem está do outro lado do balcão.
+                    </p>
+                    <div class="author-credentials">
+                        <div class="credential">
+                            <span>📊</span>
+                            <span>15 anos mercado financeiro</span>
+                        </div>
+                        <div class="credential">
+                            <span>🏦</span>
+                            <span>5 anos gerente agro</span>
+                        </div>
+                        <div class="credential">
+                            <span>💰</span>
+                            <span>R$1 bilhão estruturado</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="author-image">
+                    <div class="author-photo">
+                        <img src="eliana.jpg" alt="Eliana Santos" onerror="this.style.display='none'">
+                        <div class="author-name-overlay">
+                            <h4>Eliana Santos</h4>
+                            <span>Fundadora KRONOS.AG</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="content-section">
+        <div class="section-container">
+            <div class="section-tag">O Que Você Vai Aprender</div>
+            <h2 class="section-title">O mapa de quem decide milhões por ano</h2>
+            <div class="content-grid">
+                <div class="content-item">
+                    <div class="content-number">01</div>
+                    <div class="content-text">
+                        <h4>Os Personagens do Jogo</h4>
+                        <p>Gerente, técnico, produtor. Quem faz o quê. Onde cada um pode te ajudar ou te queimar.</p>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <div class="content-number">02</div>
+                    <div class="content-text">
+                        <h4>O Ranço Invisível</h4>
+                        <p>A reação em cadeia que queima sua reputação sem você perceber. E como evitar.</p>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <div class="content-number">03</div>
+                    <div class="content-text">
+                        <h4>A Virada de Chave</h4>
+                        <p>O que mudou no sistema bancário. Por que ficou mais difícil. Como se adaptar.</p>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <div class="content-number">04</div>
+                    <div class="content-text">
+                        <h4>Os 7 Sinais de Alerta</h4>
+                        <p>O que faz o gerente parar e pensar "problema" quando vê sua operação.</p>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <div class="content-number">05</div>
+                    <div class="content-text">
+                        <h4>O Processo Interno</h4>
+                        <p>O que acontece depois que você entrega a proposta. Passo a passo.</p>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <div class="content-number">06</div>
+                    <div class="content-text">
+                        <h4>O Que o Banco Quer</h4>
+                        <p>As 3 coisas que todo banco precisa ver pra aprovar. Simples assim.</p>
+                    </div>
+                </div>
+                <div class="content-item">
+                    <div class="content-number">07</div>
+                    <div class="content-text">
+                        <h4>A Regra de Ouro</h4>
+                        <p>Como conectar cliente e gerente pra sua operação sair na frente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- For Who Section -->
+    <section class="forwho-section">
+        <div class="section-container">
+            <div class="section-tag">Pra Quem É</div>
+            <h2 class="section-title">Crédito rural é jogo profissional. Esse manual é pra quem entendeu isso.</h2>
+            <div class="forwho-grid">
+                <div class="forwho-card yes">
+                    <h3>É pra você se:</h3>
+                    <ul class="forwho-list">
+                        <li>
+                            <span class="list-icon">✓</span>
+                            Produtor que cansou de ficar refém do "em análise"
+                        </li>
+                        <li>
+                            <span class="list-icon">✓</span>
+                            Técnico ou agrônomo que quer proposta aprovada de primeira
+                        </li>
+                        <li>
+                            <span class="list-icon">✓</span>
+                            Consultoria que quer aumentar taxa de aprovação
+                        </li>
+                        <li>
+                            <span class="list-icon">✓</span>
+                            Já teve operação travada e não sabe exatamente por quê
+                        </li>
+                    </ul>
+                </div>
+                <div class="forwho-card no">
+                    <h3>Não é pra você se:</h3>
+                    <ul class="forwho-list">
+                        <li>
+                            <span class="list-icon">✗</span>
+                            Quer atalho mágico pra aprovar crédito ruim
+                        </li>
+                        <li>
+                            <span class="list-icon">✗</span>
+                            Acha que omitir dados do banco é estratégia — e não sabotagem
+                        </li>
+                        <li>
+                            <span class="list-icon">✗</span>
+                            Trabalha com milhões de forma amadora
+                        </li>
+                        <li>
+                            <span class="list-icon">✗</span>
+                            Não quer profissionalizar suas operações
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section" id="comprar">
+        <div class="section-container">
+            <div class="section-tag">Investimento</div>
+            <h2 class="section-title">Quanto você perde com uma operação parada 60 dias?</h2>
+            <p class="pricing-subtitle">Menos que um almoço pra acessar a cabeça de quem decide milhões.</p>
+            
+            <div class="pricing-card">
+                <div class="price-old">De R$ 97</div>
+                <div class="price-main"><span>R$</span>47</div>
+                <div class="price-note">Pagamento único · Acesso imediato · PDF completo</div>
+                <a href="https://pay.hotmart.com/B103290981B" class="cta-button" target="_blank">Quero o Manual Completo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="section-tag">Dúvidas</div>
+            <h2 class="section-title" style="margin-bottom: 40px;">Perguntas Frequentes</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">Como recebo o material?</div>
+                <div class="faq-answer">
+                    <p>Pagou, recebeu. PDF no seu e-mail imediatamente após confirmação. Baixa e consulta quando precisar.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Serve pra qualquer banco?</div>
+                <div class="faq-answer">
+                    <p>Sim. A lógica de análise é a mesma em todo sistema bancário brasileiro. Cada banco tem suas particularidades, mas o que o gerente busca não muda.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Sou produtor, não técnico. Serve pra mim?</div>
+                <div class="faq-answer">
+                    <p>Serve. Você vai entender o que exigir da sua consultoria e o que o banco espera de você. Conhecimento é poder de negociação.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Por que tão barato?</div>
+                <div class="faq-answer">
+                    <p>Porque o objetivo é fazer essa informação chegar a quem precisa. Uma operação travada custa dezenas de milhares. R$47 é menos que você perde em um dia de atraso.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer CTA -->
+    <section class="footer-cta">
+        <h2>Você trabalha demais pra aceitar operação travada.</h2>
+        <p>Pare de perder tempo, dinheiro e reputação com erro que dá pra evitar.</p>
+        <a href="https://pay.hotmart.com/B103290981B" class="cta-button" target="_blank">Quero o Manual Agora</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="../" class="logo">KRONOS.AG</a>
+                <p class="footer-tagline">Seleção rigorosa. Entrega absoluta.</p>
+                <p>Crédito rural estruturado para aprovação.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/kronosag.br/" target="_blank" title="Instagram"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                    <a href="https://www.linkedin.com/in/eliana-santos-84776939a/" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://wa.me/5519989322940" target="_blank" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+                    <a href="https://www.facebook.com/profile.php?id=61584299666537" target="_blank" title="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                    <a href="https://www.tiktok.com/@kronos.ag" target="_blank" title="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
+                    <a href="https://www.youtube.com/@KRONOS-AG" target="_blank" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
+                    <a href="https://x.com/KRONOSAGRO" target="_blank" title="Twitter/X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <a href="../#sobre">Sobre</a>
+                <a href="../#processo">Processo</a>
+                <a href="../#cases">Resultados</a>
+                <a href="../#servicos">Soluções</a>
+                <a href="../insights.html">Insights</a>
+                <a href="../produtos/">KRONOS Store</a>
+                <a href="../#contato">Contato</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contato</h4>
+                <a href="mailto:eliana@kronos-ag.com">eliana@kronos-ag.com</a>
+                <a href="mailto:contatos@kronos-ag.com">contatos@kronos-ag.com</a>
+                <a href="tel:+5519989322940">(19) 98932-2940</a>
+                <a>Paragominas - PA</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 KRONOS.AG — Todos os direitos reservados<br>
+            <span style="font-size: 0.75rem; color: rgba(250, 249, 246, 0.3);">KRONOS AG INTELIGENCIA LTDA · CNPJ 63.809.853/0001-99</span>
+        </div>
+    </footer>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Reveal on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.pain-card, .content-item, .forwho-card').forEach(el =
